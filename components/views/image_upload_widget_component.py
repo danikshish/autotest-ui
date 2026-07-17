@@ -3,9 +3,9 @@ from playwright.sync_api import Page, expect
 from components.base_components import BaseComponents
 from components.views.empty_view_component import EmptyViewComponent
 from elements.button import Button
+from elements.file_input import FileInput
 from elements.image import Image
 from elements.icon import Icon
-from elements.input import Input
 from elements.text import Text
 
 
@@ -27,7 +27,7 @@ class ImageUploadWidgetComponent(BaseComponents):
         self.remove_button = Button(
             page, f'{identifier}-image-upload-widget-remove-button', 'Remove button'
         )
-        self.upload_input = page.get_by_test_id(f'{identifier}-image-upload-widget-input')
+        self.upload_input = FileInput(f'{identifier}-image-upload-widget-input')
 
 
     def check_visible(self, is_image_uploaded: bool = False):
