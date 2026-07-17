@@ -27,7 +27,7 @@ class ImageUploadWidgetComponent(BaseComponents):
         self.remove_button = Button(
             page, f'{identifier}-image-upload-widget-remove-button', 'Remove button'
         )
-        self.upload_input = FileInput(f'{identifier}-image-upload-widget-input')
+        self.upload_input = FileInput(page, f'{identifier}-image-upload-widget-input', 'Upload')
 
 
     def check_visible(self, is_image_uploaded: bool = False):
