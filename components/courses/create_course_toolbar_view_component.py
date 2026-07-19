@@ -27,3 +27,4 @@ class CreateCourseToolbarViewComponent(BaseComponents):
         self.create_course_button.click()
 
 
+
