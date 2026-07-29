@@ -1,5 +1,4 @@
 from typing import Any, Generator
-
 import allure
 from playwright.sync_api import Page, Playwright
 
