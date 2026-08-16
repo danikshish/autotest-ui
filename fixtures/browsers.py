@@ -3,7 +3,6 @@ from typing import Any, Generator
 import allure
 import pytest
 from playwright.sync_api import Page, Playwright
-
 from pages.authentication.registration_page import RegistrationPage
 from _pytest.fixtures import SubRequest
 from tools.playwright.pages import initialize_playwright_page
