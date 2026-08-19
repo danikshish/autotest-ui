@@ -30,8 +30,19 @@ jobs:
       - name: Run Playwright tests with pytest and generate Allure results
         run: |
           pytest -m regression --alluredir=./allure-results --numprocesses 2
-    
 
+      - name: Upload allure-results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          if-no-files-found: error
+
+  publish-report:
+    needs: run-tests
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -54,6 +65,11 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
+      - name: Download allure-results artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
 
 
 
