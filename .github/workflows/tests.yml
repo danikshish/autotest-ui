@@ -31,12 +31,38 @@ jobs:
         run: |
           pytest -m regression --alluredir=./allure-results --numprocesses 2
 
-      - name: Upload allure-results artifact
-        uses: actions/upload-artifact@v4
+      - name: Restore Coverage history
+        uses: actions/cache/restore@v6
+        with:
+          path: coverage-history.json
+          key: coverage-history-${{ github.run_id }}
+          restore-keys: |
+            coverage-history-
+
+      - name: Generate Coverage report
+        run: |
+          ui-coverage-tool save report
+
+      - name: Cache Coverage history
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: coverage-history.json
+          key: coverage-history-${{ github.run_id }}
+
+      - name: Upload Coverage results artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: coverage.html
+
+      - name: Upload Allure results artifact
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
           name: allure-results
           path: allure-results
-          if-no-files-found: error
 
   publish-report:
     needs: run-tests
@@ -44,7 +70,7 @@ jobs:
 
     steps:
       - name: Download allure-results artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: allure-results
           path: allure-results
@@ -65,7 +91,7 @@ jobs:
           allure_history: allure-history
 
       - name: Deploy report to Github Pages
-        uses: peaceiris/actions-gh-pages@v2
+        uses: peaceiris/actions-gh-pages@v4
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
