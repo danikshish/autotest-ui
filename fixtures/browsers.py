@@ -1,6 +1,5 @@
 from typing import Any, Generator
 
-import allure
 import pytest
 from playwright.sync_api import Page, Playwright
 from pages.authentication.registration_page import RegistrationPage
