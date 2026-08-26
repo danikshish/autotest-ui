@@ -69,7 +69,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download allure-results artifact
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download Allure results artifact
         uses: actions/download-artifact@v7
         with:
           name: allure-results
@@ -93,7 +96,7 @@ jobs:
       - name: Deploy report to Github Pages
         uses: peaceiris/actions-gh-pages@v4
         env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
 
