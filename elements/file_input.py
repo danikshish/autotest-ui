@@ -17,3 +17,4 @@ class FileInput(BaseElement):
             locator = self.get_locator(nth, **kwargs)
             logger.info(step)
             locator.set_input_files(file)
+
